@@ -31,6 +31,7 @@ from .models.app_setup import AppSetup
 from .models.configvars import ConfigVars
 from .models.logsession import LogSession
 from .models.account.feature import AccountFeature
+from .models.pipeline_coupling import PipelineCoupling
 from .exceptions import InvalidNameException
 
 if sys.version_info > (3, 0):
@@ -336,6 +337,9 @@ class Heroku(HerokuCore):
             return self._get_resource(("addon-services/{0}".format(quote(id_or_name))), Plan)
         else:
             return self._get_resources(("addon-services"), Plan, **kwargs)
+
+    def app_pipeline_couplings(self, app_id_or_name, **kwargs):
+        return self._get_resource(("apps", app_id_or_name, "pipeline-couplings"), PipelineCoupling)
 
     def apps(self, **kwargs):
         return self._get_resources(("apps"), App, **kwargs)

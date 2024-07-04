@@ -263,6 +263,15 @@ class App(BaseResource):
             resource=("apps", self.name, "dynos"), obj=Dyno, app=self, map=DynoListResource, **kwargs
         )
 
+    def pipeline_coupling(self):
+        from .pipeline_coupling import PipelineCoupling
+
+        return self._h._get_resource(
+            resource=("apps", self.name, "pipeline-couplings"),
+            obj=PipelineCoupling,
+            app=self,
+        )
+
     def kill_dyno(self, dyno_id_or_name):
         r = self._h._http_resource(method="DELETE", resource=("apps", self.id, "dynos", quote(dyno_id_or_name)))
 
